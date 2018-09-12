@@ -147,8 +147,8 @@ if __name__ == '__main__':
     signal.signal(signal.SIGTERM, handle_sig)
 
     port = int(os.getenv('PORT', 53))
-    upstream = os.getenv('UPSTREAM', '8.8.8.8')
-    zone_file = Path(os.getenv('ZONE_FILE', '/zones/zones.txt'))
+    upstream = os.getenv('UPSTREAM', '192.0.0.1')
+    zone_file = Path(os.getenv('ZONE_FILE', 'zone.txt'))
     resolver = Resolver(upstream, zone_file)
     udp_server = DNSServer(resolver, port=port)
     tcp_server = DNSServer(resolver, port=port, tcp=True)
