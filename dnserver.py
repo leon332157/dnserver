@@ -151,11 +151,11 @@ if __name__ == '__main__':
     zone_file = Path(os.getenv('ZONE_FILE', 'zone.txt'))
     resolver = Resolver(upstream, zone_file)
     udp_server = DNSServer(resolver, port=port)
-    tcp_server = DNSServer(resolver, port=port, tcp=True)
+    #tcp_server = DNSServer(resolver, port=port, tcp=True)
 
     logger.info('starting DNS server on port %d, upstream DNS server "%s"', port, upstream)
     udp_server.start_thread()
-    tcp_server.start_thread()
+    #tcp_server.start_thread()
 
     try:
         while udp_server.isAlive():
