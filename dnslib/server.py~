@@ -346,7 +346,6 @@ class DNSServer(object):
                 server = TCPServer
             else:
                 server = UDPServer
-        self.port=port
         self.server = server((address,port),handler)
         self.server.resolver = resolver
         self.server.logger = logger or DNSLogger()
@@ -363,7 +362,7 @@ class DNSServer(object):
         self.p = multiprocessing.Process(target=self.server.serve_forever)
         self.p.daemon = True
         self.p.start()
-        #print('starting DNS server on port {}'.format(self.port))
+        print('starting DNS server on port {}'.format(self.port))
     def stop(self):
         self.server.shutdown()
 

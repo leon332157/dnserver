@@ -164,7 +164,7 @@ if __name__ == '__main__':
     # tcp_server.start_thread())
     zone_file = Path('/home/lenovo/python/dnserver/zzone.txt')
     resolver = Resolver('192.0.0.1', zone_file)
-    DNSServer(resolver, port=56, logger=None).start_process()
+    udp_server = DNSServer(resolver, port=56, logger=None)
     try:
         while udp_server.isAlive():
             sleep(0.1)

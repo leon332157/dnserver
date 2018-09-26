@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from textwrap import wrap
 from time import sleep
-from multiprocessing import Process
+
 from dnslib import DNSLabel, QTYPE, RR, dns
 from dnslib.proxy import ProxyResolver
 from dnslib.server import DNSServer
@@ -148,12 +148,12 @@ def handle_sig(signum, frame):
     exit(0)
 
 
-if __name__ == '__main__':
+def main():
     signal.signal(signal.SIGTERM, handle_sig)
 
-    port = int(os.getenv('PORT', 53))
+    port = int(os.getenv('PORT', 56))
     upstream = os.getenv('UPSTREAM', '192.0.0.1')
-    zone_file = Path(os.getenv('ZONE_FILE', '/home/lenovo/python/dnserver/zonee.txt'))
+    zone_file = Path(os.getenv('ZONE_FILE', '/home/lenovo/python/dnserver/zzone.txt'))
     resolver = Resolver(upstream, zone_file)
     udp_server = DNSServer(resolver, port=port, logger=None)
     # tcp_server = DNSServer(resolver, port=port, tcp=True)
@@ -161,10 +161,8 @@ if __name__ == '__main__':
     logger.info('starting DNS server on port %d, upstream DNS server "%s"', port, upstream)
     #udp_server.start_thread()
     udp_server.start_process()
-    # tcp_server.start_thread())
-    zone_file = Path('/home/lenovo/python/dnserver/zzone.txt')
-    resolver = Resolver('192.0.0.1', zone_file)
-    DNSServer(resolver, port=56, logger=None).start_process()
+    # tcp_server.start_thread()
+
     try:
         while udp_server.isAlive():
             sleep(0.1)
